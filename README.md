@@ -24,14 +24,6 @@ kolla-genpwd -p "$KOLLA_CONFIG_PATH/passwords.yml"
 kolla-ansible certificates -i inventory.ini
 ```
 
-## Validate configuration
-
-```sh
-source .venv/bin/activate
-export KOLLA_CONFIG_PATH="$PWD/etc/kolla"
-kolla-ansible prechecks -i inventory.ini
-```
-
 ## Deploy OpenStack
 
 Run the commands in order after the certificates and prechecks are ready:
@@ -41,9 +33,9 @@ source .venv/bin/activate
 export KOLLA_CONFIG_PATH="$PWD/etc/kolla"
 
 kolla-ansible bootstrap-servers -i inventory.ini
-kolla-ansible prechecks -i inventory.ini
+kolla-ansible prechecks -i inventory.ini --use-test-images
 kolla-ansible deploy -i inventory.ini
-kolla-ansible post-deploy
+kolla-ansible post-deploy -i inventory.ini
 ```
 
 The `post-deploy` command generates `etc/kolla/clouds.yaml` for the OpenStack
