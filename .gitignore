@@ -1,6 +1,10 @@
 /all-in-one
 /multinode
+/all-in-one.ini
+/multinode.ini
+/inventory.ini
 /etc/kolla/*.yml
+/etc/kolla/certificates
 !/etc/kolla/*.example.yml
 
 # Byte-compiled / optimized / DLL files
