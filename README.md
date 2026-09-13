@@ -2,6 +2,8 @@
 
 ## Set up environment
 
+### Install kolla-ansible and dependencies
+
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
@@ -9,37 +11,60 @@ pip3 install -r requirements.txt
 kolla-ansible install-deps
 ```
 
-Run Kolla-Ansible from a supported Linux deployment host. macOS is not a supported host operating system for Kolla-Ansible prechecks.
+### Create configuration files from templates
+
+Required:
+```sh
+cp .venv/share/kolla-ansible/etc_examples/kolla/globals.yml   etc/kolla/globals.yml
+cp .venv/share/kolla-ansible/etc_examples/kolla/passwords.yml etc/kolla/passwords.yml
+kolla-genpwd -p "$PWD/etc/kolla/passwords.yml"
+```
+
+If using all-in-one node:
+```sh
+cp .venv/share/kolla-ansible/ansible/inventory/all-in-one inventory.ini
+```
+
+If using multinode:
+```sh
+cp .venv/share/kolla-ansible/ansible/inventory/multinode inventory.ini
+```
+
+## Deploy OpenStack
 
 > [!TIP]
-> To use any commands below you need to activate the virtual environment:
+> To use any functions below you need to activate the virtual environment:
 > 
 > ```sh
 > source .venv/bin/activate
 > export KOLLA_CONFIG_PATH="$PWD/etc/kolla"
 > ```
 
-## Generate passwords and self-signed TLS certificates
+### Bootstrap
 
 Run this before deployment. It generates the test CA and certificates for the configured internal and external VIPs:
 
 ```sh
-kolla-genpwd -p "$KOLLA_CONFIG_PATH/passwords.yml"
-kolla-ansible certificates -i inventory.ini
+kolla-ansible certificates      -i inventory.ini
+kolla-ansible bootstrap-servers -i inventory.ini
 ```
 
-## Deploy OpenStack
+### Prechecks
 
 ```sh
-kolla-ansible bootstrap-servers -i inventory.ini
-kolla-ansible prechecks         -i inventory.ini --use-test-images
-kolla-ansible deploy            -i inventory.ini
-kolla-ansible post-deploy       -i inventory.ini
+kolla-ansible prechecks -i inventory.ini --use-test-images
+```
+
+### Deploy
+
+```sh
+kolla-ansible deploy      -i inventory.ini
+kolla-ansible post-deploy -i inventory.ini
 ```
 
 The `post-deploy` command generates `etc/kolla/clouds.yaml` for the OpenStack client.
 
-## Reconfigure OpenStack deployment
+### Reconfigure
 
 ```sh
 kolla-ansible reconfigure -i inventory.ini
