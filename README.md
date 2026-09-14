@@ -15,6 +15,7 @@ kolla-ansible install-deps
 
 Required:
 ```sh
+mkdir -p etc/kolla
 cp .venv/share/kolla-ansible/etc_examples/kolla/globals.yml   etc/kolla/globals.yml
 cp .venv/share/kolla-ansible/etc_examples/kolla/passwords.yml etc/kolla/passwords.yml
 kolla-genpwd -p "$PWD/etc/kolla/passwords.yml"
@@ -29,6 +30,8 @@ If using multinode:
 ```sh
 cp .venv/share/kolla-ansible/ansible/inventory/multinode inventory.ini
 ```
+
+Check my `examples/globals.yml` for a minimal configuration.
 
 ## Deploy OpenStack
 
@@ -68,4 +71,5 @@ The `post-deploy` command generates `etc/kolla/clouds.yaml` for the OpenStack cl
 
 ```sh
 kolla-ansible reconfigure -i inventory.ini
+kolla-ansible deploy      -i inventory.ini
 ```
