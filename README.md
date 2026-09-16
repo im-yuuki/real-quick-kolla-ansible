@@ -67,9 +67,23 @@ kolla-ansible post-deploy -i inventory.ini
 
 The `post-deploy` command generates `etc/kolla/clouds.yaml` for the OpenStack client.
 
+### Validate configurations of enabled services
+
+```sh
+kolla-ansible validate-config -i inventory.ini
+```
+
 ### Reconfigure
 
 ```sh
 kolla-ansible reconfigure -i inventory.ini
 kolla-ansible deploy      -i inventory.ini
+```
+
+### Upgrade
+
+```sh
+kolla-ansible pull      -i inventory.ini
+kolla-ansible prechecks -i inventory.ini
+kolla-ansible upgrade   -i inventory.ini
 ```

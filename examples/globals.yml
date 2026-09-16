@@ -3,6 +3,9 @@ workaround_ansible_issue_8743: true
 
 kolla_base_distro: "debian"
 kolla_container_engine: docker
+# docker_registry: "192.168.1.100:4000"
+# docker_registry_insecure: yes
+# openstack_tag_suffix: "-aarch64"
 
 # eth0 for internet + user access, ens19 for internal communication among all nodes
 network_interface: "ens1"
@@ -19,6 +22,7 @@ enable_neutron_provider_networks: true
 
 kolla_enable_tls_external: true
 
+enable_keystone: true
 enable_horizon: true
 enable_skyline: true
 
