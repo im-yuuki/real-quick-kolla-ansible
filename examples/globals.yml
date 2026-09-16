@@ -7,7 +7,7 @@ kolla_container_engine: docker
 # docker_registry_insecure: yes
 # openstack_tag_suffix: "-aarch64"
 
-# eth0 for internet + user access, ens19 for internal communication among all nodes
+# eth0 for internet + user access, ens1 for internal communication among all nodes
 network_interface: "ens1"
 
 # multi-node only
@@ -16,7 +16,7 @@ kolla_external_vip_interface: "eth0"
 kolla_external_vip_address: "10.0.0.1"
 keepalived_virtual_router_id: "169"
 
-neutron_plugin_agent: "openvswitch"
+neutron_plugin_agent: "ovn"
 neutron_external_interface: "ens2"
 enable_neutron_provider_networks: true
 
