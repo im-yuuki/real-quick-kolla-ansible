@@ -42,6 +42,11 @@ Check my `examples/globals.yml` for a minimal configuration.
 > source .venv/bin/activate
 > export KOLLA_CONFIG_PATH="$PWD/kolla"
 > ```
+> 
+> Activate bash completion for kolla-ansible:
+> ```sh
+> source .bash_completion.sh 
+> ```
 
 ### Bootstrap
 
