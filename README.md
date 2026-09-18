@@ -15,10 +15,10 @@ kolla-ansible install-deps
 
 Required:
 ```sh
-mkdir -p etc/kolla
-cp .venv/share/kolla-ansible/etc_examples/kolla/globals.yml   etc/kolla/globals.yml
-cp .venv/share/kolla-ansible/etc_examples/kolla/passwords.yml etc/kolla/passwords.yml
-kolla-genpwd -p "$PWD/etc/kolla/passwords.yml"
+mkdir kolla
+cp .venv/share/kolla-ansible/etc_examples/kolla/globals.yml   kolla/globals.yml
+cp .venv/share/kolla-ansible/etc_examples/kolla/passwords.yml kolla/passwords.yml
+kolla-genpwd -p "$PWD/kolla/passwords.yml"
 ```
 
 If using all-in-one node:
@@ -40,7 +40,7 @@ Check my `examples/globals.yml` for a minimal configuration.
 > 
 > ```sh
 > source .venv/bin/activate
-> export KOLLA_CONFIG_PATH="$PWD/etc/kolla"
+> export KOLLA_CONFIG_PATH="$PWD/kolla"
 > ```
 
 ### Bootstrap
@@ -65,7 +65,7 @@ kolla-ansible deploy      -i inventory.ini
 kolla-ansible post-deploy -i inventory.ini
 ```
 
-The `post-deploy` command generates `etc/kolla/clouds.yaml` for the OpenStack client.
+The `post-deploy` command generates `kolla/clouds.yaml` for the OpenStack client.
 
 ### Validate configurations of enabled services
 
