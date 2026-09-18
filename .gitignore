@@ -1,5 +1,7 @@
 /inventory.ini
 /kolla/
+/private/
+/.tmp/
 
 .DS_Store
 
