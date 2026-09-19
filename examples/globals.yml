@@ -1,7 +1,7 @@
 ---
 workaround_ansible_issue_8743: true
 
-kolla_base_distro: "debian"
+kolla_base_distro: "ubuntu"
 kolla_container_engine: "docker"
 # docker_registry: "quay.io"
 # docker_namespace: "openstack.kolla"
@@ -39,8 +39,31 @@ enable_skyline: true
 # enable_valkey: true
 # cinder_cluster_name: "cinder"
 
-enable_magnum: true
-enable_heat: true
-enable_barbican: true
+# enable_magnum: true
+# enable_heat: true
+# enable_barbican: true
 enable_octavia: true
 enable_masakari: true
+
+# [IF YOU WANT TO SET UP PUBLIC ACCESS]
+# haproxy_single_external_frontend: true
+#
+# horizon_external_fqdn:           "horizon.openstack.local"
+# keystone_external_fqdn:          "keystone.openstack.local"
+# glance_external_fqdn:            "glance.openstack.local"
+# nova_external_fqdn:              "nova.openstack.local"
+# nova_novncproxy_fqdn:            "novnc.openstack.local"
+# nova_metadata_external_fqdn:     "metadata.openstack.local"
+# nova_serialproxy_fqdn:           "serial.openstack.local"
+# nova_spicehtml5proxy_fqdn:       "spice.openstack.local"
+# neutron_external_fqdn:           "neutron.openstack.local"
+# placement_external_fqdn:         "placement.openstack.local"
+# cinder_external_fqdn:            "cinder.openstack.local"
+# heat_external_fqdn:              "heat.openstack.local"
+# heat_cfn_external_fqdn:          "heat-cfn.openstack.local"
+# barbican_external_fqdn:          "barbican.openstack.local"
+# octavia_external_fqdn:           "octavia.openstack.local"
+# magnum_external_fqdn:            "magnum.openstack.local"
+# masakari_external_fqdn:          "masakari.openstack.local"
+# skyline_console_external_fqdn:   "skyline.openstack.local"
+# skyline_apiserver_external_fqdn: "dont-set-dns-for-this--skyline-api.openstack.local"
