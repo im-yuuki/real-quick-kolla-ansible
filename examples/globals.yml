@@ -66,10 +66,10 @@ enable_masakari: true
 # magnum_external_fqdn:            "magnum.openstack.local"
 # masakari_external_fqdn:          "masakari.openstack.local"
 # skyline_console_external_fqdn:   "skyline.openstack.local"
-# skyline_apiserver_external_fqdn: "dont-set-dns-for-this--skyline-api.openstack.local"
+# skyline_apiserver_external_fqdn: "skyline-api.openstack.local"
 
 # [CUSTOM IMAGES with newer Ceph client]
-# glance_api_image_full:   "ghcr.io/im-yuuki/real-quick-kolla-ansible/glance-api:2026.1-ubuntu-noble-tentacle"
+# glance_api_image_full:    "ghcr.io/im-yuuki/real-quick-kolla-ansible/glance-api:2026.1-ubuntu-noble-tentacle"
 # cinder_volume_image_full: "ghcr.io/im-yuuki/real-quick-kolla-ansible/cinder-volume:2026.1-ubuntu-noble-tentacle"
 # cinder_backup_image_full: "ghcr.io/im-yuuki/real-quick-kolla-ansible/cinder-backup:2026.1-ubuntu-noble-tentacle"
 # nova_compute_image_full:  "ghcr.io/im-yuuki/real-quick-kolla-ansible/nova-compute:2026.1-ubuntu-noble-tentacle"

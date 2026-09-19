@@ -1,1 +1,25 @@
+# [kolla-ansible]
 git+https://github.com/openstack/kolla-ansible.git@stable/2026.1
+
+# [openstack client]
+python-openstackclient
+# python-barbicanclient
+# python-cinderclient
+# python-cloudkittyclient
+# python-cyborgclient
+# python-designateclient
+# python-glanceclient
+# python-heatclient
+# python-ironicclient
+# python-keystoneclient
+# python-magnumclient
+# python-manilaclient
+# python-masakariclient
+# python-mistralclient
+# python-neutronclient
+# python-novaclient
+# python-octaviaclient
+# python-tackerclient
+# python-troveclient
+# python-watcherclient
+# python-zaqarclient
