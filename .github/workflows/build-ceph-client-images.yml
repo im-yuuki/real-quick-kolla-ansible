@@ -1,0 +1,82 @@
+name: Build Kolla images with newer Ceph client
+
+# Manual trigger only. Rebuilds selected Kolla images on top of the official
+# ones, upgrading the Ceph client packages (librados/librbd/python bindings)
+# so they can talk to newer Ceph clusters, then pushes to GHCR.
+#
+# Runner requirements (self-hosted): Linux x86_64, Docker Engine installed
+# and running, ~20 GB free disk, internet access to quay.io,
+# download.ceph.com and ghcr.io. If your runner uses custom labels,
+# adjust `runs-on` below.
+
+on:
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "Space-separated Kolla image names to rebuild"
+        required: true
+        default: "glance-api cinder-volume cinder-backup nova-compute nova-libvirt"
+        type: string
+      base_tag:
+        description: "Upstream Kolla image tag to build from"
+        required: true
+        default: "2026.1-ubuntu-noble"
+        type: string
+      target_tag:
+        description: "Tag for the rebuilt images"
+        required: true
+        default: "2026.1-ubuntu-noble-tentacle"
+        type: string
+      ceph_release:
+        description: "Ceph apt repo (download.ceph.com/debian-<release>)"
+        required: true
+        default: "tentacle"
+        type: string
+      namespace:
+        description: "GHCR namespace (owner/repo)"
+        required: true
+        default: "im-yuuki/real-quick-kolla-ansible"
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: self-hosted
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push images
+        run: |
+          bash .github/scripts/build-and-push.sh \
+            "ghcr.io/${{ inputs.namespace }}" \
+            "${{ inputs.base_tag }}" \
+            "${{ inputs.target_tag }}" \
+            "${{ inputs.ceph_release }}" \
+            ${{ inputs.images }}
+
+      - name: Kolla wiring snippet
+        run: |
+          {
+            echo "## Use the rebuilt images in kolla/globals.yml"
+            echo ""
+            echo '```yaml'
+            for img in ${{ inputs.images }}; do
+              var="$(echo "$img" | tr '-' '_')_image_full"
+              echo "${var}: \"ghcr.io/${{ inputs.namespace }}/${img}:${{ inputs.target_tag }}\""
+            done
+            echo '```'
+            echo ""
+            echo "Then run \`kolla-ansible reconfigure -i inventory.ini\` (or deploy)."
+          } >> "$GITHUB_STEP_SUMMARY"
